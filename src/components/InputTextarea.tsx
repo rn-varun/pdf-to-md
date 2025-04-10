@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { handleSubmission } from "../api";
 import OutputTextarea from "./OutputTextarea"
 
@@ -9,8 +9,10 @@ interface TextareaProps {
 
 const Textarea = ({ formName, setOutput }: TextareaProps) => {
 
+  const [text, setText] = useState("")
+
   const handleClick = async () => {
-    const res = await handleSubmission(formName);
+    const res = await handleSubmission(formName, text);
     setOutput(res); // assuming your API call returns string
   };
 
@@ -25,7 +27,7 @@ const Textarea = ({ formName, setOutput }: TextareaProps) => {
       }}
     >
       <div className="d-flex flex-column justify-content-between">
-        <textarea className="form-control" style={{
+        <textarea className="form-control" onChange={(e) => setText(e.target.value)} style={{
           width: "38vw",
           height: "100vh",
         }}

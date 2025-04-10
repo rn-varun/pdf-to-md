@@ -30,7 +30,7 @@ const Sidebar = () => {
                     <label className="form-label">Select Document type</label>
                     <select className="form-select bg-secondary text-light border-0" onChange={(e) => setSelectedDocumentType((e.target as HTMLSelectElement).value)}>
                         {documentTypes.map((type, index) => (
-                            <option key={index} value={type}>
+                            <option key={index} value={type}>   
                                 {type}
                             </option>
                         ))}

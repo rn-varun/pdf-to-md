@@ -1,6 +1,6 @@
 import { useState } from "react"
 import OutputTextarea from "../components/OutputTextarea"
-import Sidebar from "../components/sidebar"
+import Sidebar from "../components/Sidebar"
 import Textarea from "../components/InputTextarea"
 
 const Home = () => {
