@@ -5,6 +5,7 @@ interface OutputTextareaProps {
     setOutput: (val: string) => void;
 }
 
+
 const OutputTextarea = ({output, setOutput}: OutputTextareaProps) => {
   return (
     <div
