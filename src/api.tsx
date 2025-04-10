@@ -1,11 +1,13 @@
 import axios from "axios";
 
-const BACKEND_URL:string = "IMPORT BACKEND URL HERE"
+const BACKEND_URL:string = "http://127.0.0.1:8000/llm-output/"
 
 export const  handleSubmission = async (formName: string, text: string): Promise<string>  => {
-    const response = await axios.post(BACKEND_URL, {
+    const response = await axios.post(`${BACKEND_URL}${formName}`, {
         formName: formName,
         text: text,
     })
-    return response.data.data
+    console.log(formName)
+    console.log(response.data)
+    return response.data
 }

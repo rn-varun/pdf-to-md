@@ -2,9 +2,10 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { useState } from "react";
 import Textarea from "./InputTextarea";
 
-const Sidebar = () => {
+const Sidebar = ({setFormName}) => {
+
     const [textTypes, selectTextTypes] = useState(["Plaintext", "Markdown"]);
-    const [formTypes, setFormTypes] = useState(["", "Form W-2", "Form K-1", "Form 1099"]);
+    const [formTypes, setFormTypes] = useState(["", "W2", "fk1", "f1099"]);
     const [documentTypes, setDocumentTypes] = useState(["IRS Form", "Transmittal"]);
     const [selectedDocumentType, setSelectedDocumentType] = useState(documentTypes[0]);
     const [selectedTextType, setSelectedTextType] = useState("textTypes[0]");
@@ -39,7 +40,7 @@ const Sidebar = () => {
 
                 <div className="mb-3" style={selectedDocumentType == "Transmittal" ? { display: "none" } : {}}>
                     <label className="form-label">Choose form type:</label>
-                    <select className="form-select bg-secondary text-light border-0" onChange={(e) => setselectedFormType((e.target as HTMLSelectElement).value)}>
+                    <select className="form-select bg-secondary text-light border-0" onChange={(e) => setFormName((e.target as HTMLSelectElement).value)}>
                         {formTypes.map((type, index) => (
                             <option key={index} value={type} >
                                 {type}

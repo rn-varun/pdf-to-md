@@ -13,7 +13,7 @@ const Textarea = ({ formName, setOutput }: TextareaProps) => {
 
   const handleClick = async () => {
     const res = await handleSubmission(formName, text);
-    setOutput(res); // assuming your API call returns string
+    setOutput(JSON.stringify(res, null, 2)); // assuming your API call returns string
   };
 
   return (

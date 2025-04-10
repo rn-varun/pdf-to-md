@@ -2,9 +2,10 @@ import { handleSubmission } from "../api";
 
 interface OutputTextareaProps {
     output: string;
+    setOutput: (val: string) => void;
 }
 
-const OutputTextarea = ({output}: OutputTextareaProps) => {
+const OutputTextarea = ({output, setOutput}: OutputTextareaProps) => {
   return (
     <div
       className="bg-light d-flex flex-row justify-content-between"
@@ -16,7 +17,8 @@ const OutputTextarea = ({output}: OutputTextareaProps) => {
       }}
     >
       <div className="d-flex flex-column justify-content-between">
-        <textarea className="form-control" value={output} style={{
+        <textarea className="form-control" value={output} onChange={(e) => setOutput((e.target as HTMLSelectElement).value)}
+  style={{
           width: "38vw",
           height: "100vh",
         }}
