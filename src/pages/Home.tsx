@@ -6,14 +6,14 @@ import Textarea from "../components/InputTextarea"
 const Home = () => {
 
   const [output, setOutput] = useState("")
-  const [formName, setFormName] = useState("Form W-2");
+  const [formName, setFormName] = useState("");
 
 
   return (
     <div className="d-flex flex-row">
-        <Sidebar />
+        <Sidebar setFormName={setFormName}/>
         <Textarea formName={formName} setOutput={setOutput} />
-        <OutputTextarea output={output} />
+        <OutputTextarea setOutput={setOutput} output={output} />
     </div>
   )
 }
