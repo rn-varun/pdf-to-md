@@ -11,12 +11,15 @@ interface TextareaProps {
 const Textarea = ({ formName, setOutput, pdfToMdOutput }: TextareaProps) => {
 
   const [text, setText] = useState("")
-  const [pdfToMdText, setPdfToMdText] = useState("")
 
   const handleClick = async () => {
     const res = await handleSubmission(formName, text);
     setOutput(JSON.stringify(res, null, 2)); // assuming your API call returns string
   };
+
+  useEffect(() => {
+    setText(pdfToMdOutput)
+  }, [pdfToMdOutput])
 
   return (
     <div className="" style={{ width: "100vw", height: "100vh" }}>
@@ -30,7 +33,10 @@ const Textarea = ({ formName, setOutput, pdfToMdOutput }: TextareaProps) => {
       }}
     >
       <div className="d-flex flex-column justify-content-around justify-content-between">
-        <textarea className="form-control" value={pdfToMdOutput} onChange={(e) => setText(e.target.value)} style={{
+        <textarea className="form-control" value={pdfToMdOutput} onChange={(e) => {
+          setText(e.target.value)
+          console.log(text)
+        }} style={{
           width: "38vw",
           height: "100vh",
         }}
