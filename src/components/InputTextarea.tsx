@@ -5,11 +5,13 @@ import OutputTextarea from "./OutputTextarea"
 interface TextareaProps {
   formName: string;
   setOutput: (val: string) => void;
+  pdfToMdOutput: string;
 }
 
-const Textarea = ({ formName, setOutput }: TextareaProps) => {
+const Textarea = ({ formName, setOutput, pdfToMdOutput }: TextareaProps) => {
 
   const [text, setText] = useState("")
+  const [pdfToMdText, setPdfToMdText] = useState("")
 
   const handleClick = async () => {
     const res = await handleSubmission(formName, text);
@@ -17,8 +19,9 @@ const Textarea = ({ formName, setOutput }: TextareaProps) => {
   };
 
   return (
+    <div className="" style={{ width: "100vw", height: "100vh" }}>
     <div
-      className="bg-light d-flex flex-row justify-content-between"
+      className="bg-light d-flex flex-row justify-content-between py-3"
       style={{
         width: "100%",
         paddingLeft: "1rem",
@@ -26,15 +29,16 @@ const Textarea = ({ formName, setOutput }: TextareaProps) => {
         height: "100vh",
       }}
     >
-      <div className="d-flex flex-column justify-content-between">
-        <textarea className="form-control" onChange={(e) => setText(e.target.value)} style={{
+      <div className="d-flex flex-column justify-content-around justify-content-between">
+        <textarea className="form-control" value={pdfToMdOutput} onChange={(e) => setText(e.target.value)} style={{
           width: "38vw",
           height: "100vh",
         }}
         >
         </textarea>
-        <button className="btn btn-primary" onClick={handleClick}>Submit</button>
+        <button className="btn btn-primary mt-2" onClick={handleClick}>Submit</button>
       </div>
+    </div>
     </div>
   );
 };

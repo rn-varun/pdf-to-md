@@ -1,15 +1,33 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useState } from "react";
 import Textarea from "./InputTextarea";
+import axios from "axios";
+import { handleUpload } from "../api";
 
-const Sidebar = ({setFormName}) => {
+interface SidebarProps {
+    setFormName: (formName: string) => void;
+    setPdfToMdOutput: (val: string) => void;
+}
+
+const Sidebar = ({setFormName, setPdfToMdOutput}: SidebarProps) => {
 
     const [textTypes, selectTextTypes] = useState(["Plaintext", "Markdown"]);
     const [formTypes, setFormTypes] = useState(["", "W2", "fk1", "f1099"]);
     const [documentTypes, setDocumentTypes] = useState(["IRS Form", "Transmittal"]);
     const [selectedDocumentType, setSelectedDocumentType] = useState(documentTypes[0]);
     const [selectedTextType, setSelectedTextType] = useState("textTypes[0]");
-    const [selectedFormType, setselectedFormType] = useState(formTypes[0]);
+    const [pdfFile, setPdfFile] = useState<File | null>(null);
+
+    
+
+    const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+        if (!(event.target.files)) {
+            alert("Please select a file.");
+            return;
+        }
+        setPdfFile(event.target.files[0]); // possibly null thus this approach
+    }
+
     return (
         <div className="d-flex flex-row">
             <div className="bg-dark text-light p-4" style={{ width: "300px", height: "100vh" }}>
@@ -49,6 +67,13 @@ const Sidebar = ({setFormName}) => {
                     </select>
                 </div>
                 <hr className="border-light" />
+                <div className="mb-3">
+                    <label htmlFor='inputFormFile' className="font-weight-bold text-light mb-2 form-label">
+                        Convert PDF to Markdown
+                    </label>
+                    <input id="inputFormFile" className="form-control" type="file" onChange={handleFileUpload}/>
+                    <button className="btn btn-primary mt-3" onClick={() => handleUpload({ pdfFile, setPdfToMdOutput })}>Upload pdf</button>
+                </div>
             </div>
         </div>
     );
