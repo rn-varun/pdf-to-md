@@ -48,16 +48,6 @@ const OutputTextarea = ({output, setOutput}: OutputTextareaProps) => {
           console.log(e)
         }}   theme="dark"
 />
-        {/* <textarea className="form-control" value={output} onChange={(e) => setOutput((e.target as unknown as HTMLSelectElement).value)}
-  style={{
-          width: "38vw",
-          height: "100vh",
-          outline: "none",
-          boxShadow: "none",
-          resize: "none",
-        }}
-        >
-        </textarea> */}
         <button className="btn btn-dark mt-2 btn-dark" style={{}} onClick={() => handleDownload(output)}>Download file</button>
       </div>
     </div>

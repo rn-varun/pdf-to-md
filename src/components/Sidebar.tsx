@@ -5,9 +5,10 @@ import { handleUpload } from "../api";
 interface SidebarProps {
     setFormName: (formName: string) => void;
     setPdfToMdOutput: (val: string) => void;
+    setUploadedPDF: (val: File | null) => void;
 }
 
-const Sidebar = ({setFormName, setPdfToMdOutput}: SidebarProps) => {
+const Sidebar = ({setFormName, setPdfToMdOutput, setUploadedPDF}: SidebarProps) => {
 
     const [textTypes, selectTextTypes] = useState(["Plaintext", "Markdown"]);
     const [formTypes, setFormTypes] = useState(["", "W2", "fk1", "f1099"]);
@@ -23,6 +24,8 @@ const Sidebar = ({setFormName, setPdfToMdOutput}: SidebarProps) => {
             alert("Please select a file.");
             return;
         }
+        console.log("PDF uploaded: ", event.target.files[0]);
+        setUploadedPDF(event.target.files[0]);
         setPdfFile(event.target.files[0]); // possibly null thus this approach
     }
 

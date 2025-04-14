@@ -8,12 +8,13 @@ const Home = () => {
   const [output, setOutput] = useState("")
   const [formName, setFormName] = useState("");
   const [pdfToMdOutput, setPdfToMdOutput] = useState("")
+  const [uploadedPDF, setUploadedPDF] = useState<File | null>(null)
 
 
   return (
     <div className="d-flex flex-row">
-        <Sidebar setFormName={setFormName} setPdfToMdOutput={setPdfToMdOutput}/>
-        <Textarea formName={formName} setOutput={setOutput} pdfToMdOutput={pdfToMdOutput}/>
+        <Sidebar setFormName={setFormName} setUploadedPDF={setUploadedPDF} setPdfToMdOutput={setPdfToMdOutput}/>
+        <Textarea uploadedPDF={uploadedPDF} formName={formName} setOutput={setOutput} pdfToMdOutput={pdfToMdOutput}/>
         <OutputTextarea setOutput={setOutput} output={output}/>
     </div>
   )
