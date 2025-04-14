@@ -1,7 +1,5 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useState } from "react";
-import Textarea from "./InputTextarea";
-import axios from "axios";
 import { handleUpload } from "../api";
 
 interface SidebarProps {

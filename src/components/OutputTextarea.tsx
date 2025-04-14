@@ -1,9 +1,24 @@
-import { handleSubmission } from "../api";
+import ReactCodeMirror, { oneDark } from "@uiw/react-codemirror";
 
 interface OutputTextareaProps {
     output: string;
     setOutput: (val: string) => void;
 }
+
+const handleDownload = (output_text: string) => {
+  if (!output_text) return;
+  const blob = new Blob([output_text], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = "LLM_response.json";
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  URL.revokeObjectURL(url);
+};
+
 
 
 const OutputTextarea = ({output, setOutput}: OutputTextareaProps) => {
@@ -19,14 +34,31 @@ const OutputTextarea = ({output, setOutput}: OutputTextareaProps) => {
       }}
     >
       <div className="d-flex flex-column justify-content-between">
-        <textarea className="form-control" value={output} onChange={(e) => setOutput((e.target as unknown as HTMLSelectElement).value)}
+      <ReactCodeMirror style={{
+          backgroundColor: "#21252b",
+          width: "38vw",
+          height: "100vh",
+          outline: "none",
+          boxShadow: "none",
+          resize: "none",
+          overflow: "auto",
+
+        }} className="form-control" value={output} onChange={(e) => {
+          setOutput(e)
+          console.log(e)
+        }}   theme="dark"
+/>
+        {/* <textarea className="form-control" value={output} onChange={(e) => setOutput((e.target as unknown as HTMLSelectElement).value)}
   style={{
           width: "38vw",
           height: "100vh",
+          outline: "none",
+          boxShadow: "none",
+          resize: "none",
         }}
         >
-        </textarea>
-        <button className="btn btn-primary mt-2" style={{}}>Download file</button>
+        </textarea> */}
+        <button className="btn btn-dark mt-2 btn-dark" style={{}} onClick={() => handleDownload(output)}>Download file</button>
       </div>
     </div>
     </div>
