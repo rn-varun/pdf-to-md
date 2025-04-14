@@ -11,7 +11,7 @@ interface SidebarProps {
 const Sidebar = ({setFormName, setPdfToMdOutput, setUploadedPDF}: SidebarProps) => {
 
     const [textTypes, selectTextTypes] = useState(["Plaintext", "Markdown"]);
-    const [formTypes, setFormTypes] = useState(["", "W2", "fk1", "f1099"]);
+    const [formTypes, setFormTypes] = useState(["", "Transmittal", "W2", "fk1", "f1099"]);
     const [documentTypes, setDocumentTypes] = useState(["IRS Form", "Transmittal"]);
     const [selectedDocumentType, setSelectedDocumentType] = useState(documentTypes[0]);
     const [selectedTextType, setSelectedTextType] = useState("textTypes[0]");
@@ -46,7 +46,7 @@ const Sidebar = ({setFormName, setPdfToMdOutput, setUploadedPDF}: SidebarProps) 
                     </select>
                 </div>
 
-                <div className="mb-3">
+                {/* <div className="mb-3">
                     <label className="form-label">Select Document type</label>
                     <select className="form-select bg-secondary text-light border-0" onChange={(e) => setSelectedDocumentType((e.target as HTMLSelectElement).value)}>
                         {documentTypes.map((type, index) => (
@@ -55,11 +55,11 @@ const Sidebar = ({setFormName, setPdfToMdOutput, setUploadedPDF}: SidebarProps) 
                             </option>
                         ))}
                     </select>
-                </div>
+                </div> */}
 
                 <div className="mb-3" style={selectedDocumentType == "Transmittal" ? { display: "none" } : {}}>
                     <label className="form-label">Choose form type:</label>
-                    <select className="form-select bg-secondary text-light border-0" onChange={(e) => setFormName((e.target as HTMLSelectElement).value)}>
+                    <select className="form-select bg-secondary text-light border-0" onChange={(e) => {setFormName((e.target as HTMLSelectElement).value)}}>
                         {formTypes.map((type, index) => (
                             <option key={index} value={type} >
                                 {type}

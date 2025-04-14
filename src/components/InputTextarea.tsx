@@ -84,7 +84,7 @@ const Textarea = ({
         }}
       >
         <iframe
-          src={uploadedPDF ? URL.createObjectURL(uploadedPDF) : ""}
+          src={uploadedPDF ? URL.createObjectURL(uploadedPDF) : "Please upload a PDF"}
           width="100%"
           height="100%"
           style={{ border: "none" }}

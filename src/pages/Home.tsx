@@ -10,7 +10,7 @@ const Home = () => {
   const [pdfToMdOutput, setPdfToMdOutput] = useState("")
   const [uploadedPDF, setUploadedPDF] = useState<File | null>(null)
 
-
+  console.log(formName)
   return (
     <div className="d-flex flex-row">
         <Sidebar setFormName={setFormName} setUploadedPDF={setUploadedPDF} setPdfToMdOutput={setPdfToMdOutput}/>
