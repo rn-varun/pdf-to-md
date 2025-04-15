@@ -5,17 +5,12 @@ interface UploadProps {
   setPdfToMdOutput: (val: string) => void;
 }
 
-const VITE_BACKEND_TRANSMITTAL_URL: string = import.meta.env
-  .VITE_BACKEND_TRANSMITTAL;
 const VITE_BACKEND_IRS_URL: string = import.meta.env.VITE_BACKEND_IRS;
-// const VITE_BACKEND_BASE:string = import.meta.env.VITE_BACKEND_BASE
 
 export const handleSubmission = async (
   formName: string,
   text: string
 ): Promise<string> => {
-  // pydantic model / IRS Form
-  console.log("formName", formName);
   const response = await axios.post(
     `${VITE_BACKEND_IRS_URL}llm-output/${formName}`,
     {
@@ -24,9 +19,6 @@ export const handleSubmission = async (
     }
   );
   return response.data;
-
-  // console.log(formName)
-  // console.log(response.data)
 };
 
 export const handleUpload = async ({

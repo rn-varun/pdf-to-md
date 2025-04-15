@@ -1,6 +1,7 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useState } from "react";
 import { handleUpload } from "../api";
+import axios from "axios";
 
 interface SidebarProps {
     setFormName: (formName: string) => void;
@@ -17,7 +18,6 @@ const Sidebar = ({setFormName, setPdfToMdOutput, setUploadedPDF}: SidebarProps) 
     const [selectedTextType, setSelectedTextType] = useState("textTypes[0]");
     const [pdfFile, setPdfFile] = useState<File | null>(null);
 
-    
 
     const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
         if (!(event.target.files)) {
@@ -45,18 +45,6 @@ const Sidebar = ({setFormName, setPdfToMdOutput, setUploadedPDF}: SidebarProps) 
                         ))}
                     </select>
                 </div>
-
-                {/* <div className="mb-3">
-                    <label className="form-label">Select Document type</label>
-                    <select className="form-select bg-secondary text-light border-0" onChange={(e) => setSelectedDocumentType((e.target as HTMLSelectElement).value)}>
-                        {documentTypes.map((type, index) => (
-                            <option key={index} value={type}>   
-                                {type}
-                            </option>
-                        ))}
-                    </select>
-                </div> */}
-
                 <div className="mb-3" style={selectedDocumentType == "Transmittal" ? { display: "none" } : {}}>
                     <label className="form-label">Choose form type:</label>
                     <select className="form-select bg-secondary text-light border-0" onChange={(e) => {setFormName((e.target as HTMLSelectElement).value)}}>

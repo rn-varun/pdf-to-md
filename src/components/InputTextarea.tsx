@@ -2,6 +2,7 @@ import { JSX, useEffect, useState } from "react";
 import { handleSubmission } from "../api";
 import ReactCodeMirror from "@uiw/react-codemirror";
 import MarkdownPreview from "@uiw/react-markdown-preview";
+import axios from "axios";
 
 interface TextareaProps {
   formName: string;
@@ -93,6 +94,17 @@ const Textarea = ({
     ),
   };
 
+  const callIText = async (text: string) => {
+    const VITE_BACKEND_TRANSMITTAL: string = import.meta.env.VITE_BACKEND_TRANSMITTAL;
+    const response = await axios.post(
+      `${VITE_BACKEND_TRANSMITTAL}ConvertPdfToMarkdown`,
+      {
+        text,
+      }
+    );
+    return response.data;
+  }
+
   return (
     <div className="" style={{ width: "100vw", height: "100vh" }}>
       <div
@@ -134,7 +146,15 @@ const Textarea = ({
             ))}
           </select>
           {views[selectedOption]}
-          <button className="btn btn-dark mt-2" onClick={handleClick}>
+          <button className="btn btn-dark mt-2" onClick={() => {
+            if (formName === "Transmittal") {
+              callIText(text).then((res) => {
+                setOutput(JSON.stringify(res, null, 2));
+              });
+            } else {
+              handleSubmission(formName, text)
+            }
+          }}>
             Get LLM response
           </button>
         </div>
