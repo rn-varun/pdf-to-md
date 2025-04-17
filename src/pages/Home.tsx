@@ -13,7 +13,7 @@ const Home = () => {
   console.log(formName)
   return (
     <div className="d-flex flex-row">
-        <Sidebar setFormName={setFormName} setUploadedPDF={setUploadedPDF} setPdfToMdOutput={setPdfToMdOutput}/>
+        <Sidebar setFormName={setFormName} setUploadedPDF={setUploadedPDF} setPdfToMdOutput={setPdfToMdOutput} formName={formName}/>
         <Textarea uploadedPDF={uploadedPDF} formName={formName} setOutput={setOutput} pdfToMdOutput={pdfToMdOutput}/>
         <OutputTextarea setOutput={setOutput} output={output}/>
     </div>

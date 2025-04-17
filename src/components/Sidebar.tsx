@@ -7,14 +7,13 @@ interface SidebarProps {
     setFormName: (formName: string) => void;
     setPdfToMdOutput: (val: string) => void;
     setUploadedPDF: (val: File | null) => void;
+    formName: string;
 }
 
-const Sidebar = ({setFormName, setPdfToMdOutput, setUploadedPDF}: SidebarProps) => {
+const Sidebar = ({ setFormName, setPdfToMdOutput, setUploadedPDF, formName }: SidebarProps) => {
 
     const [textTypes, selectTextTypes] = useState(["Plaintext", "Markdown"]);
     const [formTypes, setFormTypes] = useState(["", "Transmittal", "W2", "fk1", "f1099"]);
-    const [documentTypes, setDocumentTypes] = useState(["IRS Form", "Transmittal"]);
-    const [selectedDocumentType, setSelectedDocumentType] = useState(documentTypes[0]);
     const [selectedTextType, setSelectedTextType] = useState("textTypes[0]");
     const [pdfFile, setPdfFile] = useState<File | null>(null);
 
@@ -26,7 +25,28 @@ const Sidebar = ({setFormName, setPdfToMdOutput, setUploadedPDF}: SidebarProps) 
         }
         console.log("PDF uploaded: ", event.target.files[0]);
         setUploadedPDF(event.target.files[0]);
-        setPdfFile(event.target.files[0]); // possibly null thus this approach
+        setPdfFile(event.target.files[0]);
+    }
+
+
+    const callIText = async (pdfFile: File | null) => {
+        if (!pdfFile) {
+            alert("Please select a file.");
+            return;
+        }
+        const formData = new FormData();
+        formData.append("file", pdfFile);
+        const VITE_BACKEND_TRANSMITTAL: string = import.meta.env.VITE_BACKEND_TRANSMITTAL;
+        const response = await axios.post(
+            `${VITE_BACKEND_TRANSMITTAL}api/Values/ConvertPdfToMarkdown`,
+            {
+                pdfFile,
+            },
+            {
+                headers: { "Content-Type": "multipart/form-data" },
+            }
+        );
+        return response.data;
     }
 
     return (
@@ -45,9 +65,9 @@ const Sidebar = ({setFormName, setPdfToMdOutput, setUploadedPDF}: SidebarProps) 
                         ))}
                     </select>
                 </div>
-                <div className="mb-3" style={selectedDocumentType == "Transmittal" ? { display: "none" } : {}}>
+                <div className="mb-3">
                     <label className="form-label">Choose form type:</label>
-                    <select className="form-select bg-secondary text-light border-0" onChange={(e) => {setFormName((e.target as HTMLSelectElement).value)}}>
+                    <select className="form-select bg-secondary text-light border-0" onChange={(e) => { setFormName((e.target as HTMLSelectElement).value) }}>
                         {formTypes.map((type, index) => (
                             <option key={index} value={type} >
                                 {type}
@@ -60,8 +80,20 @@ const Sidebar = ({setFormName, setPdfToMdOutput, setUploadedPDF}: SidebarProps) 
                     <label htmlFor='inputFormFile' className="font-weight-bold text-light mb-2 form-label">
                         Convert PDF to Markdown
                     </label>
-                    <input id="inputFormFile" className="form-control" type="file" onChange={handleFileUpload}/>
-                    <button className="btn btn-primary mt-3" onClick={() => handleUpload({ pdfFile, setPdfToMdOutput })}>Upload pdf</button>
+                    <input id="inputFormFile" className="form-control" type="file" onChange={handleFileUpload} />
+                    <button className="btn btn-primary mt-3" onClick={async () => {
+                        if (formName === "Transmittal") {
+                            const md_text = callIText(pdfFile);
+                            setPdfToMdOutput(await md_text);
+                        } else {
+                            if (!pdfFile) {
+                                alert("Please select a file.");
+                                return;
+                            } else {
+                                handleUpload({ pdfFile, setPdfToMdOutput })
+                            }
+                        }
+                    }}>Upload pdf</button>
                 </div>
             </div>
         </div>

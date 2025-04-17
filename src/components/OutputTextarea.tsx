@@ -1,4 +1,5 @@
 import ReactCodeMirror, { oneDark } from "@uiw/react-codemirror";
+import { BsDownload } from "react-icons/bs";
 
 interface OutputTextareaProps {
     output: string;
