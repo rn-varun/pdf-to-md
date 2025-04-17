@@ -40,7 +40,7 @@ const Sidebar = ({ setFormName, setPdfToMdOutput, setUploadedPDF, formName }: Si
         const response = await axios.post(
             `${VITE_BACKEND_TRANSMITTAL}api/Values/ConvertPdfToMarkdown`,
             {
-                pdfFile,
+                file: pdfFile,
             },
             {
                 headers: { "Content-Type": "multipart/form-data" },

@@ -136,7 +136,7 @@ const Textarea = ({
             ))}
           </select>
           {views[selectedOption]}
-          <button className="btn btn-dark mt-2">
+          <button className="btn btn-dark mt-2" onClick={() => handleClick()}>
             Get LLM response
           </button>
         </div>
