@@ -6,6 +6,7 @@ interface UploadProps {
 }
 
 const VITE_BACKEND_IRS_URL: string = import.meta.env.VITE_BACKEND_IRS;
+const VITE_BACKEND_AZURE_READ_MODEL: string = import.meta.env.VITE_BACKEND_AZURE_READ_MODEL;
 
 export const handleSubmission = async (
   formName: string,
@@ -39,3 +40,19 @@ export const handleUpload = async ({
   setPdfToMdOutput(response.data);
   return response.data;
 };
+
+export const plainText = async ({ pdfFile, setPdfToMdOutput }: UploadProps) => {
+  if (!pdfFile) return;
+  const formData = new FormData();
+  formData.append("file", pdfFile);
+  const response = await axios.post(
+    `${VITE_BACKEND_AZURE_READ_MODEL}extract-text`,
+    { file: formData },
+    {
+      headers: { "Content-Type": "multipart/form-data" },
+    }
+  );
+  console.log(response.data)
+  setPdfToMdOutput(response.data)
+  return response.data;
+}

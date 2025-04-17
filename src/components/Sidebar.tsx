@@ -1,6 +1,6 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useState } from "react";
-import { handleUpload } from "../api";
+import { handleUpload, plainText } from "../api";
 import axios from "axios";
 
 interface SidebarProps {
@@ -11,8 +11,7 @@ interface SidebarProps {
 }
 
 const Sidebar = ({ setFormName, setPdfToMdOutput, setUploadedPDF, formName }: SidebarProps) => {
-
-    const [textTypes, selectTextTypes] = useState(["Plaintext", "Markdown"]);
+    
     const [formTypes, setFormTypes] = useState(["", "Transmittal", "W2", "fk1", "f1099"]);
     const [selectedTextType, setSelectedTextType] = useState("textTypes[0]");
     const [pdfFile, setPdfFile] = useState<File | null>(null);
@@ -54,17 +53,6 @@ const Sidebar = ({ setFormName, setPdfToMdOutput, setUploadedPDF, formName }: Si
             <div className="bg-dark text-light p-4" style={{ width: "300px", height: "100vh" }}>
 
                 <h4 className="mb-4">Configuration</h4>
-
-                <div className="mb-3">
-                    <label className="form-label">Select text type</label>
-                    <select className="form-select bg-secondary text-light border-0">
-                        {textTypes.map((type, index) => (
-                            <option key={index} value={type} onChange={(e) => setSelectedTextType((e.target as HTMLSelectElement).value)}>
-                                {type}
-                            </option>
-                        ))}
-                    </select>
-                </div>
                 <div className="mb-3">
                     <label className="form-label">Choose form type:</label>
                     <select className="form-select bg-secondary text-light border-0" onChange={(e) => { setFormName((e.target as HTMLSelectElement).value) }}>
@@ -76,12 +64,23 @@ const Sidebar = ({ setFormName, setPdfToMdOutput, setUploadedPDF, formName }: Si
                     </select>
                 </div>
                 <hr className="border-light" />
+
                 <div className="mb-3">
                     <label htmlFor='inputFormFile' className="font-weight-bold text-light mb-2 form-label">
-                        Convert PDF to Markdown
+                        Get Plaintext from PDF <span className="text-secondary">(Azure Read Model)</span>
                     </label>
                     <input id="inputFormFile" className="form-control" type="file" onChange={handleFileUpload} />
-                    <button className="btn btn-primary mt-3" onClick={async () => {
+                    <button className="btn btn-success mt-3" onClick={() => {
+                        plainText({pdfFile, setPdfToMdOutput})
+                    }}>Upload pdf</button>
+                </div>
+                <hr className="border-light" />
+                <div className="mb-3">
+                    <label htmlFor='inputFormFile' className="font-weight-bold text-light mb-2 form-label">
+                        Get Markdown from PDF
+                    </label>
+                    <input id="inputFormFile" className="form-control" type="file" onChange={handleFileUpload} />
+                    <button className="btn btn-success mt-3" onClick={async () => {
                         if (formName === "Transmittal") {
                             const md_text = callIText(pdfFile);
                             setPdfToMdOutput(await md_text);

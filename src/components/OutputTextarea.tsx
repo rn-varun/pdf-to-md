@@ -49,7 +49,7 @@ const OutputTextarea = ({output, setOutput}: OutputTextareaProps) => {
           console.log(e)
         }}   theme="dark"
 />
-        <button className="btn btn-dark mt-2 btn-dark" style={{}} onClick={() => handleDownload(output)}>Download file</button>
+        <button className="btn btn-dark mt-2 btn-dark" style={{}} onClick={() => handleDownload(output)}><BsDownload className="mx-2" /><span>Download file</span></button>
       </div>
     </div>
     </div>
