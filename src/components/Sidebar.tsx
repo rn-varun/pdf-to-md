@@ -102,7 +102,7 @@ const Sidebar = ({ setFormName, setPdfToMdOutput, setUploadedPDF, formName }: Si
                     
 
                     <button className="btn btn-success mt-3" onClick={() => {
-                        if(textType == "markdown" && formName == "Transmittal") {
+                        if(formName == "Transmittal" && textType == "markdown") {
                             callIText(pdfFile).then((data) => {
                                 setPdfToMdOutput(data);
                             });
