@@ -41,6 +41,8 @@ export const handleUpload = async ({
   return response.data;
 };
 
+
+// Read model API call to extract plaintext from PDF
 export const plainText = async ({ pdfFile, setPdfToMdOutput }: UploadProps) => {
   if (!pdfFile) return;
   const formData = new FormData();

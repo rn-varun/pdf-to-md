@@ -13,7 +13,7 @@ interface SidebarProps {
 const Sidebar = ({ setFormName, setPdfToMdOutput, setUploadedPDF, formName }: SidebarProps) => {
 
     const [formTypes, setFormTypes] = useState(["", "Transmittal", "W2", "fk1", "f1099"]);
-    const [textType, setTextType] = useState("");
+    const [textType, setTextType] = useState("plaintext");
     const [pdfFile, setPdfFile] = useState<File | null>(null);
 
 
@@ -71,43 +71,51 @@ const Sidebar = ({ setFormName, setPdfToMdOutput, setUploadedPDF, formName }: Si
                     </label>
                     <input id="inputFormFile" className="form-control" type="file" onChange={handleFileUpload} />
                     <div className="form-check mt-2">
-                        <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" />
+                        <input
+                            className="form-check-input"
+                            type="radio"
+                            name="flexRadioDefault"
+                            id="flexRadioDefault1"
+                            value="plaintext"
+                            checked={textType === "plaintext"}
+                            onChange={(e) => setTextType(e.target.value)}
+                        />
                         <label className="form-check-label" htmlFor="flexRadioDefault1">
                             Plaintext
                         </label>
                     </div>
+
                     <div className="form-check">
-                        <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked />
+                        <input
+                            className="form-check-input"
+                            type="radio"
+                            name="flexRadioDefault"
+                            id="flexRadioDefault2"
+                            value="markdown"
+                            checked={textType === "markdown"}
+                            onChange={(e) => setTextType(e.target.value)}
+                        />
                         <label className="form-check-label" htmlFor="flexRadioDefault2">
                             Markdown
                         </label>
                     </div>
+                    
 
                     <button className="btn btn-success mt-3" onClick={() => {
-                        plainText({ pdfFile, setPdfToMdOutput })
+                        if(textType == "markdown" && formName == "Transmittal") {
+                            callIText(pdfFile).then((data) => {
+                                setPdfToMdOutput(data);
+                            });
+                        }
+                        else if (textType === "markdown") {
+                            handleUpload({ pdfFile, setPdfToMdOutput }); // this makes call to IRS document, pymupdf endpoint 
+                        }
+                        else if (textType === "plaintext") {
+                            plainText({ pdfFile, setPdfToMdOutput }) // plain text api call, to read model endpoint
+                        }
                     }}>Upload pdf</button>
                 </div>
                 <hr className="border-light" />
-                {/* UPLOAD PDF TO MARKDOWN */}
-                {/* <div className="mb-3">
-                    <label htmlFor='inputFormFile' className="font-weight-bold text-light mb-2 form-label">
-                        Get Markdown from {formName} PDF
-                    </label>
-                    <input id="inputFormFile" className="form-control" type="file" onChange={handleFileUpload} />
-                    <button className="btn btn-success mt-3" onClick={async () => {
-                        if (formName === "Transmittal") {
-                            const md_text = callIText(pdfFile);
-                            setPdfToMdOutput(await md_text);
-                        } else {
-                            if (!pdfFile) {
-                                alert("Please select a file.");
-                                return;
-                            } else {
-                                handleUpload({ pdfFile, setPdfToMdOutput })
-                            }
-                        }
-                    }}>Upload pdf</button>
-                </div> */}
             </div>
         </div>
     );
