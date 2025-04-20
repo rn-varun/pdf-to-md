@@ -47,7 +47,7 @@ const Textarea = ({
           resize: "none",
           overflow: "auto",
         }}
-        className="form-control"
+        className="form-control p-2"
         value={pdfToMdOutput || text}
         onChange={(e) => {
           setText(e);
@@ -68,7 +68,7 @@ const Textarea = ({
           resize: "none",
           overflow: "auto",
         }}
-        className="rounded-3"
+        className="rounded-3 p-4"
       />
     ),
     "PDF Preview": (

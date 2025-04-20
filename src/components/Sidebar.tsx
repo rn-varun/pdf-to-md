@@ -11,9 +11,9 @@ interface SidebarProps {
 }
 
 const Sidebar = ({ setFormName, setPdfToMdOutput, setUploadedPDF, formName }: SidebarProps) => {
-    
+
     const [formTypes, setFormTypes] = useState(["", "Transmittal", "W2", "fk1", "f1099"]);
-    const [selectedTextType, setSelectedTextType] = useState("textTypes[0]");
+    const [textType, setTextType] = useState("");
     const [pdfFile, setPdfFile] = useState<File | null>(null);
 
 
@@ -67,17 +67,31 @@ const Sidebar = ({ setFormName, setPdfToMdOutput, setUploadedPDF, formName }: Si
 
                 <div className="mb-3">
                     <label htmlFor='inputFormFile' className="font-weight-bold text-light mb-2 form-label">
-                        Get Plaintext from PDF <span className="text-secondary">(Azure Read Model)</span>
+                        Get text from {formName} PDF
                     </label>
                     <input id="inputFormFile" className="form-control" type="file" onChange={handleFileUpload} />
+                    <div className="form-check mt-2">
+                        <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" />
+                        <label className="form-check-label" htmlFor="flexRadioDefault1">
+                            Plaintext
+                        </label>
+                    </div>
+                    <div className="form-check">
+                        <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked />
+                        <label className="form-check-label" htmlFor="flexRadioDefault2">
+                            Markdown
+                        </label>
+                    </div>
+
                     <button className="btn btn-success mt-3" onClick={() => {
-                        plainText({pdfFile, setPdfToMdOutput})
+                        plainText({ pdfFile, setPdfToMdOutput })
                     }}>Upload pdf</button>
                 </div>
                 <hr className="border-light" />
-                <div className="mb-3">
+                {/* UPLOAD PDF TO MARKDOWN */}
+                {/* <div className="mb-3">
                     <label htmlFor='inputFormFile' className="font-weight-bold text-light mb-2 form-label">
-                        Get Markdown from PDF
+                        Get Markdown from {formName} PDF
                     </label>
                     <input id="inputFormFile" className="form-control" type="file" onChange={handleFileUpload} />
                     <button className="btn btn-success mt-3" onClick={async () => {
@@ -93,7 +107,7 @@ const Sidebar = ({ setFormName, setPdfToMdOutput, setUploadedPDF, formName }: Si
                             }
                         }
                     }}>Upload pdf</button>
-                </div>
+                </div> */}
             </div>
         </div>
     );
